@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createAdminClient } from "@/lib/supabase/server";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: "2024-12-18.acacia",
+    apiVersion: "2024-11-20.acacia" as any,
 });
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -98,10 +99,3 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ received: true });
 }
-
-// Disable body parsing for webhook signature verification
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};

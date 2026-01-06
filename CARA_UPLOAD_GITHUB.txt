@@ -1,0 +1,65 @@
+# 📤 CARA UPLOAD KE GITHUB
+
+Ikuti langkah-langkah di bawah ini untuk upload DigiMart ke GitHub:
+
+═══════════════════════════════════════════════════════════════
+## LANGKAH 1: Buat Repository di GitHub
+═══════════════════════════════════════════════════════════════
+
+1. Buka browser, pergi ke: https://github.com/new
+
+2. Login ke akun GitHub Anda (jika belum login)
+
+3. Isi form:
+   - Repository name: DigiMart
+   - Description: Premium Digital Asset Marketplace with Next.js, Supabase, and QRIS Payment
+   - Pilih: ○ Public (atau Private jika mau)
+   - JANGAN centang:
+     ☐ Add a README file
+     ☐ Add .gitignore
+     ☐ Choose a license
+   
+4. Klik tombol hijau "Create repository"
+
+5. Setelah repository dibuat, Anda akan melihat halaman dengan instruksi.
+   SIMPAN URL repository Anda, contoh:
+   https://github.com/username/DigiMart.git
+
+═══════════════════════════════════════════════════════════════
+## LANGKAH 2: Hubungkan dan Upload
+═══════════════════════════════════════════════════════════════
+
+Setelah repository dibuat di GitHub, jalankan command berikut 
+di terminal (satu per satu):
+
+### 1. Set remote repository
+Ganti [URL-GITHUB-ANDA] dengan URL repository Anda
+
+```
+git remote add origin [URL-GITHUB-ANDA]
+```
+
+Contoh:
+```
+git remote add origin https://github.com/username/DigiMart.git
+```
+
+### 2. Ubah branch name ke main (jika perlu)
+```
+git branch -M main
+```
+
+### 3. Push ke GitHub
+```
+git push -u origin main
+```
+
+═══════════════════════════════════════════════════════════════
+## DONE! ✅
+═══════════════════════════════════════════════════════════════
+
+Setelah selesai, buka https://github.com/username/DigiMart
+untuk melihat repository Anda!
+
+Repository akan berisi semua file DigiMart (kecuali .env.local 
+yang otomatis di-ignore oleh Git).
