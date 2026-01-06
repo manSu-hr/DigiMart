@@ -58,8 +58,9 @@ export async function GET(
             );
         }
 
-        // Get file path from product
-        const product = order.product as { id: string; title: string; file_path: string } | null;
+        // Get file path from product (Supabase returns array for nested relations)
+        const productArray = order.product as unknown as { id: string; title: string; file_path: string }[] | null;
+        const product = productArray?.[0];
 
         if (!product?.file_path) {
             return NextResponse.json(
