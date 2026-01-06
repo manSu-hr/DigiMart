@@ -1,0 +1,215 @@
+# 📘 PANDUAN SETUP DIGIMART
+# Panduan Lengkap untuk Pemula
+
+Panduan ini akan menjelaskan step-by-step cara menghubungkan 
+website DigiMart dengan Supabase (database) dan payment gateway.
+
+═══════════════════════════════════════════════════════════════
+## 📋 DAFTAR ISI
+═══════════════════════════════════════════════════════════════
+
+1. Apa itu Supabase?
+2. Cara Setup Supabase (Gratis)
+3. Cara Mengisi Environment Variables
+4. Cara Setup Payment Gateway (Opsional)
+5. Menjalankan Website
+
+═══════════════════════════════════════════════════════════════
+## 1️⃣ APA ITU SUPABASE?
+═══════════════════════════════════════════════════════════════
+
+Supabase adalah layanan "Backend-as-a-Service" yang menyediakan:
+
+📦 DATABASE    = Tempat menyimpan data produk, user, dan transaksi
+🔐 AUTH        = Sistem login/register user (Email & Google)
+📁 STORAGE     = Tempat menyimpan file digital yang dijual
+
+Bayangkan Supabase seperti "server online" yang mengurus 
+semua kebutuhan backend website kamu, dan GRATIS untuk 
+project kecil-menengah!
+
+═══════════════════════════════════════════════════════════════
+## 2️⃣ CARA SETUP SUPABASE (10-15 menit)
+═══════════════════════════════════════════════════════════════
+
+### LANGKAH 1: Buat Akun Supabase
+
+1. Buka browser, pergi ke: https://supabase.com
+2. Klik tombol "Start your project" atau "Sign Up"
+3. Daftar menggunakan akun GitHub (paling mudah)
+   - Jika belum punya GitHub, daftar dulu di https://github.com
+
+### LANGKAH 2: Buat Project Baru
+
+1. Setelah login, klik "New Project"
+2. Isi formulir:
+   - Name: digimart (atau nama apapun)
+   - Database Password: buat password yang kuat (SIMPAN BAIK-BAIK!)
+   - Region: pilih yang terdekat (Southeast Asia - Singapore)
+3. Klik "Create new project"
+4. Tunggu 1-2 menit sampai project siap
+
+### LANGKAH 3: Jalankan Database Schema
+
+1. Di dashboard Supabase, klik menu "SQL Editor" di sidebar kiri
+2. Klik "New Query"
+3. Buka file: d:\webUAS\supabase\schema.sql
+4. Copy SEMUA isi file tersebut
+5. Paste ke SQL Editor di Supabase
+6. Klik tombol "Run" atau tekan Ctrl+Enter
+7. Jika berhasil, akan muncul pesan "Success"
+
+### LANGKAH 4: Buat Storage Bucket
+
+1. Klik menu "Storage" di sidebar kiri
+2. Klik "Create a new bucket"
+3. Isi:
+   - Name: digital-assets
+   - PENTING: JANGAN centang "Public bucket" (biarkan private!)
+4. Klik "Create bucket"
+
+### LANGKAH 5: Ambil API Keys
+
+1. Klik ikon ⚙️ "Settings" di sidebar kiri bawah
+2. Klik "API" di submenu
+3. Kamu akan melihat:
+   
+   Project URL: https://xxxxx.supabase.co
+   ↑ Ini adalah NEXT_PUBLIC_SUPABASE_URL
+   
+   anon public: eyJhbGc...
+   ↑ Ini adalah NEXT_PUBLIC_SUPABASE_ANON_KEY
+   
+   service_role: eyJhbGc...
+   ↑ Ini adalah SUPABASE_SERVICE_ROLE_KEY (RAHASIA!)
+
+4. SIMPAN ketiga nilai ini untuk langkah berikutnya
+
+═══════════════════════════════════════════════════════════════
+## 3️⃣ CARA MENGISI ENVIRONMENT VARIABLES
+═══════════════════════════════════════════════════════════════
+
+Environment Variables adalah "pengaturan rahasia" yang 
+TIDAK boleh diupload ke GitHub (karena berisi API keys).
+
+### LANGKAH 1: Buat File .env.local
+
+1. Buka folder: d:\webUAS\digimart
+2. Buat file baru dengan nama: .env.local
+   (Ingat, ada titik di depan nama file!)
+
+### LANGKAH 2: Isi dengan API Keys
+
+Copy-paste ini ke file .env.local, lalu ganti nilai-nilainya:
+
+```
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...xxxxx
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...xxxxx
+
+# Website URL
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+Ganti "xxxxx" dengan nilai asli dari Supabase dashboard.
+
+### LANGKAH 3: Simpan File
+
+Tekan Ctrl+S untuk menyimpan.
+
+⚠️ PENTING: File .env.local sudah otomatis di-ignore oleh Git,
+jadi tidak akan terupload ke GitHub. JANGAN ubah ini!
+
+═══════════════════════════════════════════════════════════════
+## 4️⃣ CARA SETUP PAYMENT GATEWAY (OPSIONAL)
+═══════════════════════════════════════════════════════════════
+
+Untuk menerima pembayaran QRIS di Indonesia, kamu bisa 
+menggunakan salah satu layanan ini:
+
+### OPSI A: MIDTRANS (Paling Populer di Indonesia)
+Website: https://midtrans.com
+
+1. Daftar akun Midtrans
+2. Verifikasi bisnis (butuh dokumen usaha)
+3. Dapatkan Server Key dan Client Key
+4. Midtrans akan generate QR Code QRIS otomatis
+
+### OPSI B: XENDIT
+Website: https://www.xendit.co/id/
+
+1. Daftar akun Xendit
+2. Verifikasi identitas
+3. Aktifkan metode pembayaran QRIS
+4. Dapatkan API Key
+
+### OPSI C: MANUAL (Untuk Testing)
+Untuk testing, kamu bisa:
+1. Gunakan QR Code dari DANA/OVO/GoPay merchant
+2. Verifikasi pembayaran secara manual
+
+### INTEGRASI (Contoh dengan Midtrans)
+
+Setelah punya akun Midtrans, tambahkan ke .env.local:
+
+```
+MIDTRANS_SERVER_KEY=SB-Mid-server-xxxxx
+MIDTRANS_CLIENT_KEY=SB-Mid-client-xxxxx
+```
+
+═══════════════════════════════════════════════════════════════
+## 5️⃣ MENJALANKAN WEBSITE
+═══════════════════════════════════════════════════════════════
+
+### Buka Terminal/Command Prompt
+
+1. Tekan Win+R, ketik "cmd", tekan Enter
+2. Atau di VS Code: Terminal > New Terminal
+
+### Masuk ke Folder Project
+
+```
+cd d:\webUAS\digimart
+```
+
+### Jalankan Development Server
+
+```
+npm run dev
+```
+
+### Buka di Browser
+
+Buka: http://localhost:3000
+
+🎉 Selamat! Website DigiMart kamu sudah berjalan!
+
+═══════════════════════════════════════════════════════════════
+## ❓ FAQ / PERTANYAAN UMUM
+═══════════════════════════════════════════════════════════════
+
+Q: Apakah Supabase gratis?
+A: Ya! Untuk project kecil-menengah, tier gratis sudah cukup.
+   Limit: 500MB database, 1GB storage, 50K monthly users.
+
+Q: Bagaimana kalau website sudah jadi dan mau online?
+A: Upload ke Vercel (vercel.com) - gratis dan mudah!
+   1. Push code ke GitHub
+   2. Connect GitHub dengan Vercel
+   3. Vercel akan auto-deploy
+
+Q: Bagaimana cara menambah produk baru?
+A: Buka Supabase Dashboard > Table Editor > products
+   Klik "Insert row" dan isi data produk.
+
+Q: File digital disimpan dimana?
+A: Di Supabase Storage bucket "digital-assets"
+   Upload file melalui Storage > digital-assets > Upload
+
+═══════════════════════════════════════════════════════════════
+## 📞 BUTUH BANTUAN?
+═══════════════════════════════════════════════════════════════
+
+Jika ada yang tidak jelas, jangan ragu untuk bertanya!
+Saya siap membantu menjelaskan lebih detail.
