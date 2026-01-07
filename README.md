@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DigiMart 🛒
 
-## Getting Started
+Premium Digital Asset Marketplace - Platform jual beli aset digital dengan berbagai metode pembayaran.
 
-First, run the development server:
+## 🌐 Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**Production URL:** [https://digi-mart-peach.vercel.app](https://digi-mart-peach.vercel.app)
+
+## ✨ Features
+
+- 🎨 **Modern UI** - Glassmorphism design dengan dark mode
+- 🛍️ **Product Catalog** - Showcase produk digital dengan kategori
+- 💳 **Multiple Payment Methods**:
+  - QRIS (Scan & Pay)
+  - Virtual Account (BCA, BNI, Mandiri, BRI)
+  - E-Wallet (GoPay, OVO, DANA, ShopeePay)
+  - Kartu Kredit/Debit (Visa, Mastercard, JCB)
+- 🔐 **Authentication** - Login, Register, Forgot Password
+- 📱 **Responsive** - Mobile-first design
+- 💰 **Indonesian Rupiah** - Harga dalam format Rupiah
+
+## 🚀 Tech Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **Styling:** Tailwind CSS
+- **Database:** Supabase (PostgreSQL)
+- **Payment:** Stripe
+- **Deployment:** Vercel
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── api/          # API routes
+│   ├── auth/         # Auth pages (login, signup, forgot-password)
+│   ├── dashboard/    # User dashboard
+│   ├── products/     # Products listing & detail
+│   └── page.tsx      # Homepage
+├── components/       # Reusable components
+├── lib/              # Utilities & configs
+└── types/            # TypeScript types
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js 18+
+- npm or yarn
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository:
+```bash
+git clone https://github.com/manSu-hr/DigiMart.git
+cd digimart
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Set up environment variables:
+```bash
+cp env.example.txt .env.local
+```
 
-## Deploy on Vercel
+4. Run the development server:
+```bash
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌍 Deployment
+
+The app is automatically deployed to Vercel on every push to the `main` branch.
+
+**Live URL:** [https://digi-mart-peach.vercel.app](https://digi-mart-peach.vercel.app)
+
+## 📝 Environment Variables
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
+NEXT_PUBLIC_SITE_URL=https://digi-mart-peach.vercel.app
+```
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+## 👨‍💻 Author
+
+Made with ❤️ for UAS Project
