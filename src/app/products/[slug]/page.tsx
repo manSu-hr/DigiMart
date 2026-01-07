@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import QRPaymentModal from "@/components/QRPaymentModal";
+import PaymentModal from "@/components/PaymentModal";
 import { formatRupiah } from "@/lib/currency";
 
 // Mock product data dengan harga Rupiah
@@ -54,7 +54,7 @@ const mockProduct = {
 };
 
 export default function ProductDetailPage() {
-    const [showQRModal, setShowQRModal] = useState(false);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
     const product = mockProduct;
 
     const hasDiscount = product.original_price && product.original_price > product.price;
@@ -194,7 +194,7 @@ export default function ProductDetailPage() {
                             {/* Buy Button */}
                             <div className="space-y-4">
                                 <button
-                                    onClick={() => setShowQRModal(true)}
+                                    onClick={() => setShowPaymentModal(true)}
                                     className="btn btn-primary btn-lg w-full group"
                                 >
                                     <svg
@@ -232,7 +232,7 @@ export default function ProductDetailPage() {
                                         Metode Pembayaran:
                                     </p>
                                     <div className="flex items-center justify-center gap-2 flex-wrap">
-                                        {["QRIS", "GoPay", "OVO", "DANA", "ShopeePay"].map((method) => (
+                                        {["QRIS", "Bank Transfer", "E-Wallet", "Kartu Kredit"].map((method) => (
                                             <span
                                                 key={method}
                                                 className="px-3 py-1.5 bg-slate-800 rounded-lg text-xs text-slate-300 border border-slate-700"
@@ -315,10 +315,10 @@ export default function ProductDetailPage() {
 
             <Footer />
 
-            {/* QR Payment Modal */}
-            <QRPaymentModal
-                isOpen={showQRModal}
-                onClose={() => setShowQRModal(false)}
+            {/* Payment Modal with Multiple Methods */}
+            <PaymentModal
+                isOpen={showPaymentModal}
+                onClose={() => setShowPaymentModal(false)}
                 productTitle={product.title}
                 amount={product.price}
                 orderId={`ORD-${Date.now()}`}
