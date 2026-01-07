@@ -6,9 +6,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { formatRupiah } from "@/lib/currency";
+import { Product } from "@/types";
 
 // Mock products data
-const allProducts = [
+const allProducts: Product[] = [
     {
         id: "1",
         title: "Premium UI Kit - Dashboard Pro",
@@ -193,8 +194,8 @@ export default function ProductsPage() {
                                         key={category.value}
                                         onClick={() => setSelectedCategory(category.value)}
                                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${selectedCategory === category.value
-                                                ? "bg-gradient-to-r from-cyan-500 to-purple-600 text-white"
-                                                : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+                                            ? "bg-gradient-to-r from-cyan-500 to-purple-600 text-white"
+                                            : "bg-slate-800 text-slate-300 hover:bg-slate-700"
                                             }`}
                                     >
                                         {category.name}
@@ -212,8 +213,8 @@ export default function ProductsPage() {
                     {/* Products Grid */}
                     {filteredProducts.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                            {filteredProducts.map((product, index) => (
-                                <ProductCard key={product.id} product={product} index={index} />
+                            {filteredProducts.map((product) => (
+                                <ProductCard key={product.id} product={product} />
                             ))}
                         </div>
                     ) : (
