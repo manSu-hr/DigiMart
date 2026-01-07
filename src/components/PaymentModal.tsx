@@ -22,20 +22,43 @@ interface PaymentMethodOption {
 }
 
 const paymentMethods: PaymentMethodOption[] = [
+    // E-Wallet (Prioritas User)
+    {
+        id: "ewallet_gopay",
+        name: "GoPay",
+        category: "ewallet",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg",
+        description: "Bayar langsung dari aplikasi Gojek"
+    },
+    {
+        id: "ewallet_ovo",
+        name: "OVO",
+        category: "ewallet",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_ovo_purple.svg",
+        description: "Bayar langsung dari aplikasi OVO"
+    },
+    {
+        id: "ewallet_dana",
+        name: "DANA",
+        category: "ewallet",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg",
+        description: "Bayar langsung dari aplikasi DANA"
+    },
+    {
+        id: "ewallet_shopeepay",
+        name: "ShopeePay",
+        category: "ewallet",
+        icon: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRxvnlYLapGKPDKLq-QHCl7lMCZGnPO_FKk0OhWYBY_hHi-4nqYI_xPmgMH9tOL_DVlwdQjNQIqZCCsKCXnQUwOQqBsUJq991xG-oMNg8R0CGpEZVANKe4wJV8ioQhRwZYpK7k2WPLV_U/s1600/ShopeePay.png",
+        description: "Bayar langsung dari aplikasi Shopee"
+    },
+
     // QRIS
-    { id: "qris", name: "QRIS", category: "qris", icon: "🔲", description: "Bayar dengan scan QR dari e-wallet manapun" },
+    { id: "qris", name: "QRIS", category: "qris", icon: "https://upload.wikimedia.org/wikipedia/commons/e/e1/QRIS_logo.svg", description: "Bayar dengan scan QR dari e-wallet manapun" },
+
     // Virtual Account
-    { id: "va_bca", name: "BCA Virtual Account", category: "va", icon: "🏦", description: "Transfer via ATM/Mobile/Internet Banking BCA" },
-    { id: "va_bni", name: "BNI Virtual Account", category: "va", icon: "🏦", description: "Transfer via ATM/Mobile/Internet Banking BNI" },
-    { id: "va_mandiri", name: "Mandiri Virtual Account", category: "va", icon: "🏦", description: "Transfer via ATM/Mobile/Internet Banking Mandiri" },
-    { id: "va_bri", name: "BRI Virtual Account", category: "va", icon: "🏦", description: "Transfer via ATM/Mobile/Internet Banking BRI" },
-    // E-Wallet
-    { id: "ewallet_gopay", name: "GoPay", category: "ewallet", icon: "💚", description: "Bayar langsung dari aplikasi Gojek" },
-    { id: "ewallet_ovo", name: "OVO", category: "ewallet", icon: "💜", description: "Bayar langsung dari aplikasi OVO" },
-    { id: "ewallet_dana", name: "DANA", category: "ewallet", icon: "💙", description: "Bayar langsung dari aplikasi DANA" },
-    { id: "ewallet_shopeepay", name: "ShopeePay", category: "ewallet", icon: "🧡", description: "Bayar langsung dari aplikasi Shopee" },
-    // Credit Card
-    { id: "credit_card", name: "Kartu Kredit/Debit", category: "card", icon: "💳", description: "Visa, Mastercard, JCB" },
+    { id: "va_bca", name: "BCA Virtual Account", category: "va", icon: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg", description: "Transfer via ATM, Mobile Banking, atau Internet Banking" },
+    { id: "va_bri", name: "BRI Virtual Account", category: "va", icon: "https://upload.wikimedia.org/wikipedia/commons/6/68/BANK_BRI_logo.svg", description: "Transfer via ATM, Mobile Banking, atau Internet Banking" },
+    { id: "va_mandiri", name: "Mandiri Virtual Account", category: "va", icon: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg", description: "Transfer via ATM, Mobile Banking, atau Internet Banking" },
 ];
 
 const categoryLabels = {
@@ -379,37 +402,71 @@ export default function PaymentModal({
                         </div>
 
                         {/* Payment Methods by Category */}
-                        <div className="space-y-4 mb-6">
-                            {(["qris", "va", "ewallet", "card"] as const).map((category) => {
+                        <div className="space-y-6 mb-6">
+                            {(["ewallet", "qris", "va", "card"] as const).map((category) => {
                                 const methods = paymentMethods.filter(m => m.category === category);
+                                if (methods.length === 0) return null;
 
                                 return (
                                     <div key={category}>
-                                        <h4 className="text-sm font-medium text-slate-400 mb-2">
+                                        <h4 className="text-sm font-bold text-slate-300 mb-3 pl-1">
                                             {categoryLabels[category]}
                                         </h4>
-                                        <div className="space-y-2">
-                                            {methods.map((method) => (
-                                                <button
-                                                    key={method.id}
-                                                    onClick={() => handleSelectMethod(method.id)}
-                                                    className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-all ${selectedMethod === method.id
-                                                            ? "border-cyan-500 bg-cyan-500/10"
-                                                            : "border-slate-700 bg-slate-800/50 hover:border-slate-600"
-                                                        }`}
-                                                >
-                                                    <span className="text-2xl">{method.icon}</span>
-                                                    <div className="text-left flex-1">
-                                                        <p className="font-medium text-white">{method.name}</p>
-                                                        <p className="text-xs text-slate-400">{method.description}</p>
+                                        <div className="flex flex-col gap-3">
+                                            {methods.map((method) => {
+                                                const isSelected = selectedMethod === method.id;
+                                                // Specific coloring for e-wallet hearts based on brand
+                                                const BrandIcon = (
+                                                    <div className="w-12 h-8 relative flex-shrink-0">
+                                                        <img
+                                                            src={method.icon}
+                                                            alt={method.name}
+                                                            className="w-full h-full object-contain"
+                                                        />
                                                     </div>
-                                                    {selectedMethod === method.id && (
-                                                        <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                                        </svg>
-                                                    )}
-                                                </button>
-                                            ))}
+                                                );
+
+                                                return (
+                                                    <button
+                                                        key={method.id}
+                                                        onClick={() => handleSelectMethod(method.id)}
+                                                        className={`group relative w-full flex items-center gap-4 p-4 rounded-3xl border transition-all duration-200 overflow-hidden ${isSelected
+                                                            ? "border-cyan-500 bg-slate-800 ring-1 ring-cyan-500/50"
+                                                            : "border-slate-700/50 bg-slate-900/40 hover:bg-slate-800/80 hover:border-slate-600"
+                                                            }`}
+                                                    >
+                                                        {/* Selection Indicator Background */}
+                                                        {isSelected && (
+                                                            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-transparent pointer-events-none" />
+                                                        )}
+
+                                                        <div className="relative z-10 flex-shrink-0 transition-transform group-hover:scale-105">
+                                                            {BrandIcon}
+                                                        </div>
+
+                                                        <div className="relative z-10 flex-1 text-left">
+                                                            <p className={`font-bold text-base ${isSelected ? "text-cyan-400" : "text-white"}`}>
+                                                                {method.name}
+                                                            </p>
+                                                            <p className="text-xs text-slate-400 mt-0.5 font-medium opacity-80 group-hover:opacity-100 transition-opacity">
+                                                                {method.description}
+                                                            </p>
+                                                        </div>
+
+                                                        {/* Checkmark or Circle */}
+                                                        <div className={`relative z-10 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${isSelected
+                                                            ? "border-cyan-500 bg-cyan-500"
+                                                            : "border-slate-600 group-hover:border-slate-500"
+                                                            }`}>
+                                                            {isSelected && (
+                                                                <svg className="w-3 h-3 text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M5 13l4 4L19 7" />
+                                                                </svg>
+                                                            )}
+                                                        </div>
+                                                    </button>
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 );
